@@ -1,0 +1,19 @@
+// Preview
+(function() {
+    var markdownUri = "@{MarkdownR}";
+    $(function() {
+        var getContent = function() {return $('#editor textarea').val()};
+        var oldContent = getContent();
+        $('#editor textarea').keyup(_.debounce(function() {
+            var newContent = getContent();
+            if(oldContent != newContent) {
+                $.get(markdownUri, {markdown: newContent}, function(data) {
+                    $('#preview').html(data);
+                });
+                oldContent = newContent;
+            }
+        }, 300));
+    });
+}).apply(this);
+
+// vim: ft=javascript

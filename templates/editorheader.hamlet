@@ -1,0 +1,3 @@
+<h2>
+    <a href=@{ViewR noteId}>#{title}
+<a href=@{EditR noteId}>Edit

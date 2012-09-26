@@ -1,0 +1,7 @@
+<h2>#{noteTitle note}
+    <a title="Edit" href=@{EditR noteId}>
+        <i class="icon-edit">
+
+<hr>
+<div id=rendered>
+    #{markdown}

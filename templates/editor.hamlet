@@ -1,0 +1,11 @@
+<div id=header>
+    <h2>#{title}
+
+<form id=editor enctype=#{enctype} method=post action=@{EditR noteId}>
+    ^{formWidget}
+    <input type=submit value="Save">
+
+<div id=preview-area>
+    <h4>Preview
+    <div id=preview>
+        #{markdown}

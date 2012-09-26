@@ -1,0 +1,22 @@
+<div class=navbar>
+    <div class=navbar-inner>
+        <a class=brand href="#">
+            Intruito
+        <ul class=nav>
+            <li>
+                <a href=@{HomeR}>
+                    Home
+            $maybe _ <- muser
+                <li>
+                    <a href=@{ListR}>
+                        Your notes
+                <li>
+                    <a href=@{AddR}>
+                        Create a new note
+                <li>
+                    <a href=@{AuthR LogoutR}>
+                        Logout
+            $nothing
+                <li>
+                    <a href=@{AuthR LoginR}>
+                        Login

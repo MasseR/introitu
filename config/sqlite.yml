@@ -1,0 +1,20 @@
+Default: &defaults
+  database: introitu.sqlite3
+  poolsize: 10
+
+Development:
+  <<: *defaults
+
+Testing:
+  database: introitu_test.sqlite3
+  <<: *defaults
+
+Staging:
+  database: introitu_staging.sqlite3
+  poolsize: 100
+  <<: *defaults
+
+Production:
+  database: introitu_production.sqlite3
+  poolsize: 100
+  <<: *defaults

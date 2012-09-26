@@ -1,0 +1,12 @@
+/static StaticR Static getStatic
+/auth   AuthR   Auth   getAuth
+
+/favicon.ico FaviconR GET
+/robots.txt RobotsR GET
+
+/ HomeR GET
+/note/view/#NoteId ViewR GET
+/note/edit/#NoteId EditR GET PUT
+/note/new AddR GET POST
+/notes/list ListR GET
+/markdown MarkdownR GET

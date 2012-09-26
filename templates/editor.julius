@@ -1,0 +1,39 @@
+$(function() {
+    // Mark as edited
+    var getContent = function() { return $('#editor').serialize(); };
+    (function() {
+        var oldContent = getContent();
+        $('#editor').keyup(function() {
+            var newContent = getContent();
+            if(oldContent != newContent) {
+                var form = this;
+                $(form).addClass('edited');
+                oldContent = newContent;
+            }
+        });
+    }).apply(this);
+    // Save
+    (function() {
+        var oldContent = getContent();
+        $('#editor').keyup(_.debounce(function() {
+            var newContent = getContent();
+            if(oldContent != newContent) {
+                var form = this;
+                $(form).addClass('edited');
+                oldContent = newContent;
+                $.ajax({
+                    type: "PUT",
+                    data: newContent,
+                    url: "@{EditR noteId}",
+                    success: function(data) {
+                        if(data.status && data.status == "ok") {
+                            $(form).removeClass('edited');
+                        }
+                    }
+                });
+            }
+        }, 3000));
+    }).apply(this);
+});
+
+// vim: ft=javascript
