@@ -7,7 +7,7 @@
         $('#editor textarea').keyup(_.debounce(function() {
             var newContent = getContent();
             if(oldContent != newContent) {
-                $.get(markdownUri, {markdown: newContent}, function(data) {
+                $.post(markdownUri, {markdown: newContent}, function(data) {
                     $('#preview').html(data);
                 });
                 oldContent = newContent;

@@ -15,8 +15,8 @@ renderMarkdown  = (renderToHtml . prepareText)
 htmlToText :: Html -> Text
 htmlToText = pack . renderHtml
 
-getMarkdownR :: Handler RepHtml
-getMarkdownR = do
-  markdown <- runInputGet $ iopt textareaField "markdown"
+postMarkdownR :: Handler RepHtml
+postMarkdownR = do
+  markdown <- runInputPost $ iopt textareaField "markdown"
   let rendered = maybe "" (renderMarkdown . unTextarea) markdown
   hamletToRepHtml $ [hamlet|#{rendered}|]
