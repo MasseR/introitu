@@ -6,6 +6,7 @@ module Import
     , module Settings.Development
     , module Data.Monoid
     , module Control.Applicative
+    , module Data.Time
     , Text
 #if __GLASGOW_HASKELL__ < 704
     , (<>)
@@ -24,6 +25,7 @@ import Control.Applicative ((<$>), (<*>), pure)
 import Data.Text (Text)
 import Settings.StaticFiles
 import Settings.Development
+import Data.Time (UTCTime, getCurrentTime)
 
 #if __GLASGOW_HASKELL__ < 704
 infixr 5 <>

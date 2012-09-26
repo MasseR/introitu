@@ -32,6 +32,8 @@ import Text.Jasmine (minifym)
 import Web.ClientSession (getKey)
 import Text.Hamlet (hamletFile)
 import Database.Esqueleto
+import qualified Text.HyperEstraier.Database as Hs
+import Data.Conduit.Pool
 
 
 -- | The site argument for your application. This can be a good place to
@@ -42,6 +44,7 @@ data App = App
     { settings :: AppConfig DefaultEnv Extra
     , getStatic :: Static -- ^ Settings for static file serving.
     , connPool :: Database.Persist.Store.PersistConfigPool Settings.PersistConfig -- ^ Database connection pool.
+    , indexPool :: Pool Hs.Database
     , httpManager :: Manager
     , persistConfig :: Settings.PersistConfig
     }

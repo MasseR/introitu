@@ -4,6 +4,7 @@ import Import hiding (update, (==.), (=.))
 import Handler.Add (NoteForm(..), noteForm)
 import Handler.Markdown (renderMarkdown, htmlToText)
 import Database.Esqueleto
+import Model.Note
 
 modifyNote :: NoteId -> NoteForm -> YesodDB sub App ()
 modifyNote noteId form = update $ \n -> do
@@ -36,6 +37,8 @@ putEditR noteId = do
   ((result, _), _) <- runFormPost $ renderDivs (noteForm Nothing)
   case result of
        FormSuccess form -> do
+         time <- liftIO getCurrentTime
          _ <- runDB $ modifyNote noteId form
+         _ <- getUrlRender >>= indexNote noteId time
          jsonToRepJson $ object [("status", "ok" :: Text), ("rendered", htmlToText $ renderMarkdown (unTextarea $ fnoteContent form))]
        err -> jsonToRepJson $ object [("error", show err)]

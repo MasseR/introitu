@@ -25,6 +25,7 @@ library
                      Foundation
                      Import
                      Model
+                     Model.Note
                      Settings
                      Settings.StaticFiles
                      Settings.Development
@@ -85,7 +86,10 @@ library
                  , esqueleto == 0.2.*
                  , pandoc == 1.9.*
                  , blaze-html == 0.5.1.*
-                 -- , HsHyperEstraier == 0.4.*
+                 , HsHyperEstraier == 0.4.*
+                 , pool-conduit == 0.1.*
+                 , time == 1.4.*
+                 , network == 2.3.*
 
 executable         introitu
     if flag(library-only)

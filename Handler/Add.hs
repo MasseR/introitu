@@ -1,6 +1,7 @@
 module Handler.Add where
 
 import Import
+import Model.Note
 
 data NoteForm = NoteForm {
     fnoteTitle :: Text
@@ -31,6 +32,8 @@ postAddR = do
   ((result, _), _) <- runFormPost $ renderDivs (noteForm Nothing)
   case result of
        FormSuccess note -> do
+         time <- liftIO getCurrentTime
          noteId <- runDB $ insert $ Note userId (fnoteTitle note) (fnoteContent note) (fnoteTopic note)
+         _ <- getUrlRender >>= indexNote noteId time
          redirect $ EditR noteId
        _ -> redirect AddR
