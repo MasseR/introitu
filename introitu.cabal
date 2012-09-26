@@ -85,7 +85,7 @@ library
                  , esqueleto == 0.2.*
                  , pandoc == 1.9.*
                  , blaze-html == 0.5.1.*
-                 , HsHyperEstraier == 0.4.*
+                 -- , HsHyperEstraier == 0.4.*
 
 executable         introitu
     if flag(library-only)
