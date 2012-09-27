@@ -53,9 +53,9 @@ makeFoundation conf = do
     index <- createPool
       (dbOrThrow "casket" (Hs.Writer [Hs.Create []]))
       Hs.closeDatabase
+      1
       5
-      5
-      5
+      1
     s <- staticSite
     dbconf <- withYamlEnvironment "config/postgresql.yml" (appEnv conf)
               Database.Persist.Store.loadConfig >>=
