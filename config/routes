@@ -6,7 +6,7 @@
 
 / HomeR GET
 /note/view/#NoteId ViewR GET
-/note/edit/#NoteId EditR GET PUT
+/note/edit/#NoteId EditR GET POST PUT
 /note/new AddR GET POST
 /notes/list ListR GET
 /markdown MarkdownR POST

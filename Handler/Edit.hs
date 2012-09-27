@@ -29,7 +29,16 @@ getEditR noteId = do
     $(widgetFile "editor")
 
 postEditR :: NoteId -> Handler RepHtml
-postEditR = error "Not yet implemented: postEditR"
+postEditR noteId = do
+  _ <- runDB $ get404 noteId
+  ((result, _), _) <- runFormPost $ renderDivs (noteForm Nothing)
+  case result of
+       FormSuccess form -> do
+         time <- liftIO getCurrentTime
+         _ <- runDB $ modifyNote noteId form
+         getUrlRender >>= indexNote noteId time
+       _ -> return ()
+  redirect $ EditR noteId
 
 putEditR :: NoteId -> Handler RepJson
 putEditR noteId = do
