@@ -25,6 +25,7 @@ getEditR noteId = do
     setTitle $ toHtml title
     addScriptRemote "//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.2/jquery.min.js"
     addScriptRemote "//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js"
+    toWidget [lucius|#editor textarea { width: 100%; }|]
     $(widgetFile "preview")
     $(widgetFile "editor")
 

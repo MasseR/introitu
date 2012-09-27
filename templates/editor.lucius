@@ -3,6 +3,7 @@
     border-width: 1px;
     border-color: red;
 }
+#editor textarea { width: 100%; }
 /*
  * vim: filetype=css
  * */

@@ -1,8 +1,11 @@
-<form id=editor enctype=#{enctype} method=post action=@{AddR}>
-    ^{formWidget}
-    <input type=submit value="Save">
-
-<hr>
-<div id=preview-area>
-    <h4>Preview
-    <div id=preview>
+<div class=row>
+    <div class=span6>
+        <form id=editor enctype=#{enctype} method=post action=@{AddR}>
+            ^{formWidget}
+            <input type=submit value="Save">
+<div class=row>
+    <div class=span6>
+        <hr>
+        <div id=preview-area>
+            <h4>Preview
+            <div id=preview>
