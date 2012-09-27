@@ -15,5 +15,6 @@ Staging:
   <<: *defaults
 
 Production:
-  #approot: "http://www.example.com"
+  approot: "intruito.net"
+  port 3002
   <<: *defaults
