@@ -1,17 +1,22 @@
-<h2>Your notes
+<h2>#{title}
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>##
-            <th>Title
-            <th>Topic
-            <th>Spoiler
-    <tbody>
-        $forall (i, note) <- notes
-            <tr>
-                <td>
-                    <a href=@{ViewR $ entityKey note}>#{i}
-                <td>#{noteTitle $ entityVal note}
-                <td>#{noteTopic $ entityVal note}
-                <td>#{spoiler $ noteText $ entityVal note}
+<div class=row>
+    <div class="span4">
+        <p>#{length notes} found
+<div class=row>
+    <div class=span8>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>##
+                    <th>Title
+                    <th>Topic
+                    <th>Spoiler
+            <tbody>
+                $forall (i, note) <- notes
+                    <tr>
+                        <td>
+                            <a href=@{ViewR $ entityKey note}>#{i}
+                        <td>#{noteTitle $ entityVal note}
+                        <td>#{noteTopic $ entityVal note}
+                        <td>#{spoiler $ noteText $ entityVal note}

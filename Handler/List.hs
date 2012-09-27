@@ -9,6 +9,8 @@ getListR = do
   user <- requireAuth
   notes <- (zip [1 :: Int ..]) <$> (runDB $ selectList [NoteOwner ==. entityKey user] [Asc NoteTopic])
   defaultLayout $ do
+    let title = "Your notes" :: Html
+    setTitle title
     $(widgetFile "list")
   where
     spoiler (Textarea text) = maybe "" id $ listToMaybe $ T.lines text

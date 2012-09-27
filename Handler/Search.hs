@@ -29,6 +29,9 @@ getSearchR = do
   (Entity userId _) <- requireAuth
   strcond <- runInputGet $ ireq textField "search"
   notes <- (zip [1 :: Int ..]) <$> searchNote userId strcond
-  defaultLayout $(widgetFile "list")
+  defaultLayout $ do
+    let title = "Search results" :: Html
+    setTitle title
+    $(widgetFile "list")
   where
     spoiler (Textarea text) = maybe "" id $ listToMaybe $ T.lines text
