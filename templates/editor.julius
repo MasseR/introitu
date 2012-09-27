@@ -1,4 +1,6 @@
 $(function() {
+    // Create editor
+    $('#editor textarea').markItUp(mySettings);
     // Mark as edited
     var getContent = function() { return $('#editor').serialize(); };
     (function() {

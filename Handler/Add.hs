@@ -24,6 +24,10 @@ getAddR = do
     setTitle "New note"
     addScriptRemote "//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.2/jquery.min.js"
     addScriptRemote "//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js"
+    addScript $ StaticR markitup_jquery_markitup_js
+    addScript $ StaticR markitup_sets_markdown_set_js
+    addStylesheet $ StaticR markitup_skins_markitup_style_css
+    addStylesheet $ StaticR markitup_sets_markdown_style_css
     $(widgetFile "preview")
     $(widgetFile "add")
 
