@@ -16,7 +16,7 @@ modifyNote noteId form = update $ \n -> do
 getEditR :: NoteId -> Handler RepHtml
 getEditR noteId = do
   note <- runDB $ get404 noteId
-  let form = Just $ NoteForm (noteTitle note) (noteText note) (noteTopic note)
+  let form = Just $ NoteForm (noteTitle note) (noteTopic note) (noteText note)
   ((_, formWidget), enctype) <- runFormPost $ renderDivs $ noteForm form
   defaultLayout $ do
     let title = noteTitle note

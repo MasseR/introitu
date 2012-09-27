@@ -5,14 +5,15 @@ import Model.Note
 
 data NoteForm = NoteForm {
     fnoteTitle :: Text
+  , fnoteTopic :: Text
   , fnoteContent :: Textarea
-  , fnoteTopic :: Text} deriving Show
+  } deriving Show
 
 noteForm :: Maybe NoteForm -> AForm App App NoteForm
 noteForm note = NoteForm <$>
   areq textField "Title" (fnoteTitle <$> note) <*>
-  areq textareaField "Content" (fnoteContent <$> note) <*>
-  areq textField "Topic" (fnoteTopic <$> note)
+  areq textField "Topic" (fnoteTopic <$> note) <*>
+  areq textareaField "Content" (fnoteContent <$> note)
 
 getAddR :: Handler RepHtml
 getAddR = do
