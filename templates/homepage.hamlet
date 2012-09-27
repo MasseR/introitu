@@ -18,13 +18,14 @@
 
             <div class="span2 offset1">
                 <h4>Todo
-                <ul>
-                    <li>Integrate hyperestraier for full-text-search
-                    <li>Enable searching
+                <ul class=todo>
                     <li>Allow full features with restful interface
                     <li>Authentication for 3rd-party programs
                 <h4>News
-                <ul>
+                <ul class=news>
+                    <li>Layout changes
+                    <li>Added searching
+                    <li>Added indexing
                     <li>Added autosaving when editing
                     <li>Added almost realtime markdown rendering
                     <li>Added possibility to edit notes
