@@ -1,19 +1,19 @@
 module Handler.Markdown where
 
 import Import
-import Data.Text (pack)
-import qualified Data.Text as T (filter)
+import qualified Data.Text as T
 import Text.Blaze.Html.Renderer.String (renderHtml)
 import Text.Pandoc (writeHtml, readMarkdown, defaultWriterOptions, defaultParserState)
+import Text.HTML.SanitizeXSS
 
 renderMarkdown :: Text -> Html
 renderMarkdown  = (renderToHtml . prepareText)
   where
         renderToHtml = (writeHtml defaultWriterOptions) . (readMarkdown defaultParserState)
-        prepareText = renderHtml . toHtml . T.filter (/= '\r')
+        prepareText = T.unpack . T.filter (/= '\r') . sanitize
 
 htmlToText :: Html -> Text
-htmlToText = pack . renderHtml
+htmlToText = T.pack . renderHtml
 
 postMarkdownR :: Handler RepHtml
 postMarkdownR = do
