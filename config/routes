@@ -10,3 +10,4 @@
 /note/new AddR GET POST
 /notes/list ListR GET
 /markdown MarkdownR POST
+/notes/search SearchR GET

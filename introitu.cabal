@@ -35,6 +35,7 @@ library
                      Handler.View
                      Handler.List
                      Handler.Markdown
+                     Handler.Search
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT

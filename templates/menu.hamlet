@@ -20,3 +20,7 @@
                 <li>
                     <a href=@{AuthR LoginR}>
                         Login
+        $maybe _ <- muser
+            <form method=get action=@{SearchR} class="navbar-form pull-right">
+                <input type=text name=search>
+                <input type=submit value="Search">
