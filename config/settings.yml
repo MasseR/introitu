@@ -16,5 +16,5 @@ Staging:
 
 Production:
   approot: "intruito.net"
-  port 3002
+  port: 3002
   <<: *defaults
