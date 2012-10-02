@@ -20,3 +20,24 @@
                         <td>#{noteTitle $ entityVal note}
                         <td>#{noteTopic $ entityVal note}
                         <td>#{spoiler $ noteText $ entityVal note}
+        <div class=pagination>
+            <ul>
+                $if pageNum == 1
+                    <li class=disabled>
+                        <a href=#>Prev
+                $else
+                    <li>
+                        <a href="?page=#{show (pred pageNum)}">Prev
+                $forall page <- pages
+                    $if page == pageNum
+                        <li class=active>
+                            <a href="?page=#{show page}">#{show page}
+                    $else
+                        <li>
+                            <a href="?page=#{show page}">#{show page}
+                $if pageNum == (last pages)
+                    <li class=disabled>
+                        <a href=#>Next
+                $else
+                    <li>
+                        <a href="?page=#{show (succ pageNum)}">Next
