@@ -1,7 +1,7 @@
 <div class=navbar>
     <div class=navbar-inner>
         <a class=brand href="#">
-            Intruito
+            Introitu
         <ul class=nav>
             <li>
                 <a href=@{HomeR}>
