@@ -1,41 +1,24 @@
 $(function() {
     // Create editor
     $('#editor textarea').markItUp(mySettings);
-    // Mark as edited
-    var getContent = function() { return $('#editor').serialize(); };
-    (function() {
-        var oldContent = getContent();
-        $('#editor').keyup(function() {
-            var newContent = getContent();
-            if(oldContent != newContent) {
-                var form = this;
-                $(form).addClass('edited');
-                oldContent = newContent;
-            }
-        });
-    }).apply(this);
-    // Save
-    (function() {
-        var oldContent = getContent();
-        $('#editor').keyup(_.debounce(function() {
-            var newContent = getContent();
-            if(oldContent != newContent) {
-                var form = this;
-                $(form).addClass('edited');
-                oldContent = newContent;
-                $.ajax({
-                    type: "PUT",
-                    data: newContent,
-                    url: "@{EditR noteId}",
-                    success: function(data) {
-                        if(data.status && data.status == "ok") {
-                            $(form).removeClass('edited');
-                        }
-                    }
-                });
-            }
-        }, 3000));
-    }).apply(this);
+    var edits = $("#editor").
+        asEventStream("keyup").
+        map(function() { return $("#editor").serialize(); }).
+        skipDuplicates();
+    var saves = edits.throttle(1500).flatMap(function(content) {
+        return Bacon.fromPromise($.ajax({
+            type:"PUT",
+            data: content,
+            url: "@{EditR noteId}"
+        }));
+    });
+    var saveStatus = edits.map(true).merge(saves.map(false)).skipDuplicates().toProperty(false);
+    saveStatus.onValue(function(edited) {
+        if(!edited)
+            $("#editor").removeClass('edited');
+        else
+            $('#editor').addClass('edited');
+    });
 });
 
 // vim: ft=javascript
