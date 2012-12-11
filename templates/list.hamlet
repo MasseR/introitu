@@ -13,13 +13,16 @@
                     <th>Topic
                     <th>Spoiler
             <tbody>
-                $forall (i, note) <- notes
-                    <tr>
-                        <td>
-                            <a href=@{ViewR $ entityKey note}>#{i}
-                        <td>#{noteTitle $ entityVal note}
-                        <td>#{noteTopic $ entityVal note}
-                        <td>#{spoiler $ noteText $ entityVal note}
+                $if not (null notes)
+                    $forall (i, note) <- notes
+                        <tr>
+                            <td>
+                                <a href=@{ViewR $ entityKey note}>#{i}
+                            <td>#{noteTitle $ entityVal note}
+                            <td>#{noteTopic $ entityVal note}
+                            <td>#{spoiler $ noteText $ entityVal note}
+                $else
+                    <p>No results
         <div class=pagination>
             <ul>
                 $if pageNum == 1

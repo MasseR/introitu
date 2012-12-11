@@ -1,0 +1,3 @@
+[submodule "modules/yesod"]
+	path = modules/yesod
+	url = https://github.com/yesodweb/yesod
