@@ -3,8 +3,9 @@
     var markdownUri = "@{MarkdownR}";
     var content =$("#editor textarea").
         asEventStream("keyup").
-        map(function(e) { return $(e.srcElement).val() }).
-        skipDuplicates();
+        map(function(e) { return $(e.target).val() }).
+        skipDuplicates().
+        toProperty($("#editor textarea").val());
     var markdown = content.throttle(300).flatMap(function(c) {
         return Bacon.fromPromise($.post(markdownUri, {markdown: c}));
     }).toProperty("");
