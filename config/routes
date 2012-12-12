@@ -11,3 +11,4 @@
 /notes/list ListR GET
 /markdown MarkdownR POST
 /notes/search SearchR GET
+/recommend/topic RecommendTopicR GET
