@@ -1,3 +1,4 @@
+{-# Language OverloadedStrings #-}
 module Handler.Add where
 
 import Import
@@ -13,7 +14,7 @@ noteForm :: Maybe NoteForm -> AForm App App NoteForm
 noteForm note = NoteForm <$>
   areq textField "Title" (fnoteTitle <$> note) <*>
   areq textField "Topic" (fnoteTopic <$> note) <*>
-  areq textareaField "Content" (fnoteContent <$> note)
+  (maybe (Textarea "") id <$> aopt textareaField "Content" Nothing)
 
 getAddR :: Handler RepHtml
 getAddR = do

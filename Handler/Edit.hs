@@ -2,7 +2,7 @@ module Handler.Edit where
 
 import Import hiding (update, (==.), (=.))
 import Handler.Add (NoteForm(..), noteForm)
-import Handler.Markdown (renderMarkdown, htmlToText)
+import Handler.Markdown (renderMarkdown)
 import Database.Esqueleto
 import Model.Note
 
@@ -54,5 +54,5 @@ putEditR noteId = do
          time <- liftIO getCurrentTime
          _ <- runDB $ modifyNote noteId form
          _ <- getUrlRender >>= indexNote noteId time
-         jsonToRepJson $ object [("status", "ok" :: Text), ("rendered", htmlToText $ renderMarkdown (unTextarea $ fnoteContent form))]
+         jsonToRepJson $ object [("status", "ok" :: Text)]
        err -> jsonToRepJson $ object [("error", show err)]
