@@ -14,12 +14,26 @@ searchNote pageNumber uid cond = do
   i <- indexPool <$> getYesod
   runDB $ withResource i (searchNote' pageNumber uid cond)
 
+attrSearch :: Text -> Text -> Database -> IO [DocumentID]
+attrSearch attr str db = do
+  condition <- newCondition
+  addAttrCond condition $ T.unwords [attr, "STROR", str]
+  searchDatabase db condition
+
+textSearch :: Text -> Database -> IO [DocumentID]
+textSearch str db = do
+  condition <- newCondition
+  setPhrase condition str
+  searchDatabase db condition
+
 searchNote' :: Int -> UserId -> Text -> Database -> YesodDB sub App (Int, [Entity Note])
 searchNote' pageNumber userId strcond db = do
   foundNoteKeys <- liftIO $ do
-    condition <- newCondition
-    setPhrase condition strcond
-    docids <- searchDatabase db condition
+    docids <- concat <$> sequence [
+        attrSearch "@title" strcond db
+      , attrSearch "@title" strcond db
+      , textSearch strcond db
+      ]
     catMaybes <$> mapM getKey docids
   getNote foundNoteKeys
   where
