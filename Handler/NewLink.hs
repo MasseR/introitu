@@ -4,20 +4,20 @@ import Import
 import Network.URI (parseURI)
 import qualified Data.Text as T
 import Data.Char (isSpace)
+import Data.Foldable (msum)
 
-data LinkForm = LinkForm Text Text Textarea [Text]
+data LinkForm = LinkForm (Maybe Text) Text Textarea [Text]
 
 linkForm :: AForm App App LinkForm
 linkForm = LinkForm <$> 
-  areq uriField "URL" Nothing <*>
+  ((fmap T.pack . msum . uris) <$> areq textField "URL" Nothing) <*>
   (maybe "" id <$> aopt textField "Title" Nothing) <*>
   (maybe (Textarea "") id <$> aopt textareaField "Summary" Nothing) <*>
   (maybe [] splitTags <$> aopt textField "Tags" Nothing)
   where
     splitTags = map trim . T.split (== ',')
     trim = T.dropWhileEnd isSpace . T.dropWhile isSpace
-    uriField = check validateURI textField
-    validateURI uri = maybe (Left ("Not a valid url" :: Text)) (const (Right uri)) (parseURI $ T.unpack uri)
+    uris uri = map (fmap show . parseURI . T.unpack) [uri, "http://" `T.append` uri]
 
 getNewLinkR :: Handler RepHtml
 getNewLinkR = do
@@ -34,8 +34,11 @@ postNewLinkR = do
   (Entity user _) <- requireAuth
   now <- liftIO getCurrentTime
   case form of
-       FormSuccess (LinkForm url title summary tags) -> do
-         linkId <- runDB $ insert (Link url user title summary now)
-         runDB $ mapM_ (insert . LinkTags linkId) tags
-         redirect $ ViewLinkR linkId
+       FormSuccess (LinkForm url title summary tags) ->
+         case url of
+              Just url' -> do
+                linkId <- runDB $ insert (Link url' user title summary now)
+                runDB $ mapM_ (insert . LinkTags linkId) tags
+                redirect $ ViewLinkR linkId
+              _ -> setMessage "Invalid url" >> redirect NewLinkR
        _ -> redirect NewLinkR
