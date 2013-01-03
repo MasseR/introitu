@@ -14,9 +14,6 @@
                     <a href=@{AddR}>
                         Create a new note
                 <li>
-                    <a href=@{ListLinksR}>
-                        Links
-                <li>
                     <a href=@{AuthR LogoutR}>
                         Logout
             $nothing
