@@ -4,10 +4,15 @@ $(function() {
             map(function() { return elem.val(); }).
             skipDuplicates();
     };
+    var inputProperty = function(elem) {
+        return inputStream(elem).toProperty(elem.val());
+    };
 
     // A bit risky selector, but as form library doesn't put meaningful ids,
     // there is pretty much nothing I can do
 
+    var tagProperty = inputProperty($($("#editor input[type=text]")[2])).
+        map(function(t) { return t.split(",").map(function(s) { return s.trim(); }).filter(function(s) { return s != ""; }); });
     var urlStream = inputStream($("#editor input[type=text] :first"));
     var pageStream = urlStream.throttle(300).flatMap(function(content) {
         return Bacon.fromPromise($.ajax({
@@ -21,6 +26,11 @@ $(function() {
         merge(pageStream.map(false)).skipDuplicates().
         toProperty(false);
 
+    tagProperty.onValue(function(v) {
+        tagView = "{{#tags}}<li>{{.}}</li>{{/tags}}"
+        tags = Mustache.render(tagView, {tags: v})
+        $("#taglist").html(tags);
+    });
     pageProperty.map(function(x) { return x.title; }).assign($($("#editor input[type=text]")[1]), "val")
     pageProperty.map(function(x) { return x.summary; }).assign($("#editor textarea"), "val")
     editedProperty.onValue(function (edited) {

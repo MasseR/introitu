@@ -5,3 +5,6 @@
             <input type=submit>
         <div class="progress progress-striped active"id=spinner">
             <div class=bar style="width: 100%">
+    <div class=span3>
+        <h4>Selected tags
+        <ul id=taglist>

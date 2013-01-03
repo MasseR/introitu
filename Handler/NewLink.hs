@@ -1,17 +1,21 @@
 module Handler.NewLink where
 
 import Import
-import Network.URI (parseURI, URI(..))
+import Network.URI (parseURI)
 import qualified Data.Text as T
+import Data.Char (isSpace)
 
-data LinkForm = LinkForm Text Text Textarea
+data LinkForm = LinkForm Text Text Textarea [Text]
 
 linkForm :: AForm App App LinkForm
 linkForm = LinkForm <$> 
   areq uriField "URL" Nothing <*>
   (maybe "" id <$> aopt textField "Title" Nothing) <*>
-  (maybe (Textarea "") id <$> aopt textareaField "Summary" Nothing)
+  (maybe (Textarea "") id <$> aopt textareaField "Summary" Nothing) <*>
+  (maybe [] splitTags <$> aopt textField "Tags" Nothing)
   where
+    splitTags = map trim . T.split (== ',')
+    trim = T.dropWhileEnd isSpace . T.dropWhile isSpace
     uriField = check validateURI textField
     validateURI uri = maybe (Left ("Not a valid url" :: Text)) (const (Right uri)) (parseURI $ T.unpack uri)
 
@@ -21,6 +25,7 @@ getNewLinkR = do
   defaultLayout $ do
     addScriptRemote "//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.2/jquery.min.js"
     addScriptRemote "https://raw.github.com/raimohanska/bacon.js/master/lib/Bacon.min.js"
+    addScriptRemote "https://raw.github.com/janl/mustache.js/master/mustache.js"
     $(widgetFile "newLink")
 
 postNewLinkR :: Handler RepHtml
@@ -29,7 +34,8 @@ postNewLinkR = do
   (Entity user _) <- requireAuth
   now <- liftIO getCurrentTime
   case form of
-       FormSuccess (LinkForm url title summary) -> do
+       FormSuccess (LinkForm url title summary tags) -> do
          linkId <- runDB $ insert (Link url user title summary now)
+         runDB $ mapM_ (insert . LinkTags linkId) tags
          redirect $ ViewLinkR linkId
        _ -> redirect NewLinkR
