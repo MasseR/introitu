@@ -36,6 +36,10 @@ library
                      Handler.List
                      Handler.Markdown
                      Handler.Search
+                     Handler.NewLink
+                     Handler.ListLinks
+                     Handler.EditLink
+                     Handler.ViewLink
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT

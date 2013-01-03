@@ -34,6 +34,7 @@ import Text.Hamlet (hamletFile)
 import Database.Esqueleto
 import qualified Text.HyperEstraier.Database as Hs
 import Data.Conduit.Pool
+import Data.Maybe (listToMaybe)
 
 -- | The site argument for your application. This can be a good place to
 -- keep settings and values requiring initialization before your application
@@ -165,18 +166,38 @@ instance RenderMessage App FormMessage where
 getExtra :: Handler Extra
 getExtra = fmap (appExtra . settings) getYesod
 
-data Permission = Post | Edit NoteId | View NoteId | List
+data Permission = Post |
+  Edit NoteId |
+  View NoteId |
+  List |
+  PostLink |
+  EditLink LinkId |
+  ViewLink LinkId
 
 permissionsRequiredFor :: Route App -> Bool -> [Permission]
 permissionsRequiredFor AddR _ = [Post]
+permissionsRequiredFor NewLinkR _ = [Post]
 permissionsRequiredFor ListR _ = [List]
+permissionsRequiredFor ListLinksR _ = [List]
 permissionsRequiredFor (EditR noteid) _ = [Edit noteid]
 permissionsRequiredFor (ViewR noteid) _ = [View noteid]
+permissionsRequiredFor (EditLinkR link) _ = [EditLink link]
+permissionsRequiredFor (ViewLinkR link) _ = [ViewLink link]
 permissionsRequiredFor _ _ = []
 
 hasPermissionTo :: Entity User -> Permission -> YesodDB sub App AuthResult
 _ `hasPermissionTo` Post = return Authorized
+_ `hasPermissionTo` PostLink = return Authorized
 _ `hasPermissionTo` List = return Authorized
+(Entity userId _) `hasPermissionTo` (EditLink link) = do
+  link' <- select $ from $ \l -> do
+    where_ (l ^. LinkOwner ==. val userId &&. l ^. LinkId ==. val link)
+    return l
+  return $ maybe
+    (Unauthorized "You have no permission to access this link")
+    (const Authorized)
+    (listToMaybe link')
+user `hasPermissionTo` (ViewLink link) = user `hasPermissionTo` EditLink link
 (Entity userId _) `hasPermissionTo` (Edit note) = do
   note' <- select $ from $ \n -> do
     where_ (n ^. NoteOwner ==. val userId &&. n ^. NoteId ==. val note)

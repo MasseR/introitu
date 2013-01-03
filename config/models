@@ -21,7 +21,7 @@ Keyword
     keyword Text
 Link
     url Text
-    owner Text
+    owner UserId
     date UTCTime
 LinkInfo
     link LinkId

@@ -11,3 +11,7 @@
 /notes/list ListR GET
 /markdown MarkdownR POST
 /notes/search SearchR GET
+/link/new NewLinkR GET POST
+/link/list ListLinksR GET
+/link/edit/#LinkId EditLinkR GET POST
+/link/view/#LinkId ViewLinkR GET
