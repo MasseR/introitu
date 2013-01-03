@@ -1,0 +1,40 @@
+$(function() {
+    var inputStream = function(elem) {
+        return elem.asEventStream("keyup").
+            map(function() { return elem.val(); }).
+            skipDuplicates();
+    };
+
+    // A bit risky selector, but as form library doesn't put meaningful ids,
+    // there is pretty much nothing I can do
+
+    var urlStream = inputStream($("#editor input[type=text] :first"));
+    var pageStream = urlStream.throttle(300).flatMap(function(content) {
+        return Bacon.fromPromise($.ajax({
+            type:"GET",
+            data: {url: content},
+            url: "@{LinkInfoR}"
+        }))
+    });
+    var pageProperty = pageStream.toProperty({title: "", summary: ""});
+    var editedProperty = urlStream.map(true).
+        merge(pageStream.map(false)).skipDuplicates().
+        toProperty(false);
+
+    pageProperty.map(function(x) { return x.title; }).assign($($("#editor input[type=text]")[1]), "val")
+    pageProperty.map(function(x) { return x.summary; }).assign($("#editor textarea"), "val")
+    editedProperty.onValue(function (edited) {
+        if(edited) {
+            $($("#editor input[type=text]")[1]).attr("readonly", 1);
+            $("#editor textarea").attr("readonly", 1);
+            $("#spinner").show();
+        }
+        else {
+            $($("#editor input[type=text]")[1]).removeAttr("readonly");
+            $("#editor textarea").removeAttr("readonly");
+            $("#spinner").hide();
+        }
+    });
+});
+
+// vim: ft=javascript

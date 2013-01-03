@@ -14,10 +14,12 @@ $(function() {
     });
     var saveStatus = edits.map(true).merge(saves.map(false)).skipDuplicates().toProperty(false);
     saveStatus.onValue(function(edited) {
-        if(!edited)
+        if(!edited) {
             $("#editor").removeClass('edited');
-        else
+        }
+        else {
             $('#editor').addClass('edited');
+        }
     });
 });
 

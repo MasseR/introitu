@@ -22,11 +22,8 @@ Keyword
 Link
     url Text
     owner UserId
-    date UTCTime
-LinkInfo
-    link LinkId
-    title Text
-    summary Text
+    title Text default=''
+    summary Textarea default=''
     date UTCTime
 
  -- By default this file is used in Model.hs (which is imported by Foundation.hs)

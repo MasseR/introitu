@@ -40,6 +40,7 @@ library
                      Handler.ListLinks
                      Handler.EditLink
                      Handler.ViewLink
+                     Handler.LinkInfo
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT
@@ -96,6 +97,7 @@ library
                  , time == 1.4.*
                  , network == 2.3.*
                  , xss-sanitize == 0.3.*
+                 , tagsoup == 0.12.*
 
 executable         introitu
     if flag(library-only)
