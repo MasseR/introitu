@@ -1,0 +1,33 @@
+$(function() {
+    var inputStream = function(elem) {
+        return elem.asEventStream("keyup").
+            map(function() { return elem.val(); }).
+            skipDuplicates();
+    };
+    var inputProperty = function(elem) {
+        return inputStream(elem).toProperty(elem.val());
+    };
+    var filterTags = function(tags) {
+        var data = $("table > tbody > tr");
+        data.each(function(id, x) {
+            var row = $(x);
+            var rowTags = row.attr("data-tags").split(" ");
+            var intersection = _(tags).intersect(rowTags);
+            var show = _(tags).isEmpty() ? true : !_(intersection).isEmpty();
+            if(show)
+                row.show();
+            else
+                row.hide();
+        });
+    };
+
+    var tagFilter = inputProperty($("input[name=filter]")).map(function(x) {
+        return _(x.split(",")).chain().
+            map(function(y) { return y.trim(); }).
+            filter(function(y) { return y != ""; }).
+            value();
+    });
+    tagFilter.onValue(filterTags);
+});
+
+// vim: ft=javascript
