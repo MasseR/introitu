@@ -14,7 +14,7 @@ noteForm :: Maybe NoteForm -> AForm App App NoteForm
 noteForm note = NoteForm <$>
   areq textField "Title" (fnoteTitle <$> note) <*>
   areq textField "Topic" (fnoteTopic <$> note) <*>
-  (maybe (Textarea "") id <$> aopt textareaField "Content" Nothing)
+  (maybe (Textarea "") id <$> aopt textareaField "Content" ((Just . fnoteContent) <$> note))
 
 getAddR :: Handler RepHtml
 getAddR = do
