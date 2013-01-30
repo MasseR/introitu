@@ -24,7 +24,7 @@ getNewLinkR = do
   ((_, formWidget), enctype) <- runFormPost $ renderDivs linkForm
   defaultLayout $ do
     addScriptRemote "//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.2/jquery.min.js"
-    addScriptRemote "https://raw.github.com/raimohanska/bacon.js/master/lib/Bacon.min.js"
+    addScriptRemote "https://raw.github.com/raimohanska/bacon.js/master/dist/Bacon.min.js"
     addScriptRemote "https://raw.github.com/janl/mustache.js/master/mustache.js"
     $(widgetFile "newLink")
 
