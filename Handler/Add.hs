@@ -24,7 +24,7 @@ getAddR = do
     let markdownUri = renderer $ MarkdownR
     setTitle "New note"
     addScriptRemote "//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.2/jquery.min.js"
-    addScriptRemote "https://raw.github.com/raimohanska/bacon.js/master/lib/Bacon.min.js"
+    addScriptRemote "https://raw.github.com/raimohanska/bacon.js/master/dist/Bacon.min.js"
     addScriptRemote "//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.3/underscore-min.js"
     addScript $ StaticR markitup_jquery_markitup_js
     addScript $ StaticR markitup_sets_markdown_set_js
