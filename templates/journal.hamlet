@@ -7,7 +7,8 @@
         <h3>#{journalName journal}
         $maybe description <- journalDescription journal
             <p>#{description}
-<div class=row-fluid>
-    $forall item <- items
-        <div class=well>
-            ^{item}
+<div id=results>
+    <div class=row-fluid>
+        $forall item <- items
+            <div class=well>
+                ^{item}

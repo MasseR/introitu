@@ -4,7 +4,7 @@ $(function() {
         $.post(url,
                $(this).serialize(),
                function(data) {
-                   console.log(data);
+                   $(data.item).prependTo('#results');
                });
         return false;
     });
