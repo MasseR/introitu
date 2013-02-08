@@ -1,10 +1,12 @@
 $(function() {
     $("#itemForm").submit(function() {
         var url = $(this).attr('action');
+        var form = this;
         $.post(url,
                $(this).serialize(),
                function(data) {
                    $(data.item).prependTo('#results');
+                   $(form).find("textarea").val('');
                });
         return false;
     });
