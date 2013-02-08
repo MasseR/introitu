@@ -18,4 +18,11 @@ getCreateJournalR = do
     $(widgetFile "createjournal")
 
 postCreateJournalR :: Handler RepHtml
-postCreateJournalR = error "Not yet implemented: postCreateJournalR"
+postCreateJournalR = do
+  (Entity userId _) <- requireAuth
+  ((result, _), _) <- runFormPost $ renderDivs (journalForm Nothing)
+  case result of
+       FormSuccess journal -> do
+         journalId <- runDB $ insert $ Journal userId (fJournalName journal) (fJournalDescription journal)
+         redirect $ WriteJournalR journalId
+       _ -> redirect CreateJournalR
