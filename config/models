@@ -31,7 +31,7 @@ LinkTags
 Journal
     owner UserId
     name Text
-    description Text Maybe
+    description Textarea Maybe
 JournalItem
     journal JournalId
     created UTCTime
