@@ -6,6 +6,7 @@ data JournalForm = JournalForm {
   fJournalName :: Text,
   fJournalDescription :: (Maybe Textarea)
   }
+journalForm :: Maybe JournalForm -> AForm App App JournalForm
 journalForm j = JournalForm
   <$> areq textField "Name" (fJournalName <$> j)
   <*> aopt textareaField "Description" (fJournalDescription <$> j)
