@@ -8,3 +8,6 @@
         $maybe description <- journalDescription journal
             <p>#{description}
 <div class=row-fluid>
+    $forall item <- items
+        <div class=well>
+            ^{item}
