@@ -41,6 +41,11 @@ library
                      Handler.EditLink
                      Handler.ViewLink
                      Handler.LinkInfo
+                     Handler.CreateJournal
+                     Handler.AddJournalItem
+                     Handler.JournalEdit
+                     Handler.ListJournals
+                     Handler.WriteJournal
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT
@@ -72,6 +77,9 @@ library
                  , yesod-test                    >= 0.3        && < 0.4
                  , clientsession                 >= 0.8        && < 0.9
                  , bytestring                    >= 0.9        && < 0.10
+                 , blaze-html                    == 0.5.*
+                 , old-locale                    == 1.0.*
+                 , blaze-markup                  == 0.5.*
                  , text                          >= 0.11       && < 0.12
                  , persistent                    >= 1.0        && < 1.1
                  , persistent-sqlite     >= 1.0        && < 1.1

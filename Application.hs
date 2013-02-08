@@ -33,6 +33,11 @@ import Handler.ListLinks
 import Handler.EditLink
 import Handler.ViewLink
 import Handler.LinkInfo
+import Handler.CreateJournal
+import Handler.AddJournalItem
+import Handler.JournalEdit
+import Handler.ListJournals
+import Handler.WriteJournal
 
 -- This line actually creates our YesodSite instance. It is the second half
 -- of the call to mkYesodData which occurs in Foundation.hs. Please see

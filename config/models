@@ -22,11 +22,19 @@ Keyword
 Link
     url Text
     owner UserId
-    title Text default=''
-    summary Textarea default=''
+    title Text
+    summary Textarea
     date UTCTime
 LinkTags
     link LinkId
     tag Text
+Journal
+    owner UserId
+    name Text
+    description Textarea Maybe
+JournalItem
+    journal JournalId
+    created UTCTime
+    text Textarea
 
  -- By default this file is used in Model.hs (which is imported by Foundation.hs)

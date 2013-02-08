@@ -1,0 +1,17 @@
+<div class=fluid-row>
+    <div class=span7>
+        <table class=table>
+            <thead>
+                <th>##
+                <th>Journal
+                <th>Items
+            <tbody>
+                $forall (idx, journal, journalCount) <- journalTuple
+                    <tr>
+                        <td><a href=@{WriteJournalR (entityKey journal)}>#{idx}
+                        <td><a href=@{WriteJournalR (entityKey journal)}>#{journalName (entityVal journal)}
+                        <td><a href=@{WriteJournalR (entityKey journal)}>#{journalCount}
+    <div class="span4 well">
+        <form method=post action=@{CreateJournalR}>
+            ^{formWidget}
+            <input type=submit class=btn value="Create new">

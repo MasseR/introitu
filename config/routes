@@ -16,3 +16,8 @@
 /link/edit/#LinkId EditLinkR GET POST
 /link/view/#LinkId ViewLinkR GET
 /link/info LinkInfoR GET
+/journal/new CreateJournalR GET POST
+/journal/insert/#JournalId AddJournalItemR POST
+/journal/edit/#JournalId JournalEditR GET
+/journal/list ListJournalsR GET
+/journal/write/#JournalId WriteJournalR GET
