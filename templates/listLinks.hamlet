@@ -14,3 +14,5 @@
                         <td><a href="#{linkUrl link}">#{linkUrl link}
                         <td>#{linkTitle link}
                         <td>#{T.intercalate ", " tags}
+    <div class=span2>
+        <a href=@{NewLinkR}>New link
