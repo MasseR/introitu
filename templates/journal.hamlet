@@ -1,0 +1,8 @@
+<div class=row-fluid>
+    <div class="well span7">
+        foo
+    <div class="well span4">
+        <h3>#{journalName journal}
+        $maybe description <- journalDescription journal
+            <p>#{description}
+<div class=row-fluid>
