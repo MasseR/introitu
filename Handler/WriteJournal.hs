@@ -16,4 +16,5 @@ getWriteJournalR journalId = do
   items <- map (renderItem . entityVal) <$> (runDB $ selectList [JournalItemJournal ==. journalId] [Desc JournalItemCreated])
   ((_, formWidget), enctype) <- runFormPost $ renderDivs journalItemForm
   defaultLayout $ do
+    addScriptRemote "//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.2/jquery.min.js"
     $(widgetFile "journal")

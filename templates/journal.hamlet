@@ -1,6 +1,6 @@
 <div class=row-fluid>
     <div class="well span7">
-        <form>
+        <form id="itemForm" method=post action=@{AddJournalItemR journalId}>
             ^{formWidget}
             <input type=submit class=btn value=Add>
     <div class="well span4">

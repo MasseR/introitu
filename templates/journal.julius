@@ -1,0 +1,11 @@
+$(function() {
+    $("#itemForm").submit(function() {
+        var url = $(this).attr('action');
+        $.post(url,
+               $(this).serialize(),
+               function(data) {
+                   console.log(data);
+               });
+        return false;
+    });
+});
