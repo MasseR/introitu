@@ -11,7 +11,11 @@ journalForm j = JournalForm
   <*> aopt textareaField "Description" (fJournalDescription <$> j)
 
 getCreateJournalR :: Handler RepHtml
-getCreateJournalR = error "Not yet implemented: getCreateJournalR"
+getCreateJournalR = do
+  ((_, formWidget), enctype) <- runFormPost $ renderDivs (journalForm Nothing)
+  defaultLayout $ do
+    setTitle "New journal"
+    $(widgetFile "createjournal")
 
 postCreateJournalR :: Handler RepHtml
 postCreateJournalR = error "Not yet implemented: postCreateJournalR"
