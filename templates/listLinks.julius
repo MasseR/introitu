@@ -13,7 +13,7 @@ $(function() {
             var row = $(x);
             var rowTags = row.attr("data-tags").split(" ");
             var intersection = _(tags).intersect(rowTags);
-            var show = _(tags).isEmpty() ? true : !_(intersection).isEmpty();
+            var show = _(tags).isEmpty() ? true : (intersection.length == tags.length)
             if(show)
                 row.show();
             else
