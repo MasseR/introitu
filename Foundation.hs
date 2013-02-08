@@ -172,7 +172,8 @@ data Permission = Post |
   List |
   PostLink |
   EditLink LinkId |
-  ViewLink LinkId
+  ViewLink LinkId |
+  EditJournal JournalId
 
 permissionsRequiredFor :: Route App -> Bool -> [Permission]
 permissionsRequiredFor AddR _ = [Post]
@@ -183,6 +184,9 @@ permissionsRequiredFor (EditR noteid) _ = [Edit noteid]
 permissionsRequiredFor (ViewR noteid) _ = [View noteid]
 permissionsRequiredFor (EditLinkR link) _ = [EditLink link]
 permissionsRequiredFor (ViewLinkR link) _ = [ViewLink link]
+permissionsRequiredFor (WriteJournalR journal) _ = [EditJournal journal]
+permissionsRequiredFor (JournalEditR journal) _ = [EditJournal journal]
+permissionsRequiredFor (CreateJournalR) _ = [Post]
 permissionsRequiredFor _ _ = []
 
 hasPermissionTo :: Entity User -> Permission -> YesodDB sub App AuthResult
@@ -206,6 +210,13 @@ user `hasPermissionTo` (ViewLink link) = user `hasPermissionTo` EditLink link
        [] -> return $ Unauthorized "You have no permission to edit this note"
        _ -> return Authorized
 user `hasPermissionTo` (View note) = user `hasPermissionTo` (Edit note)
+(Entity userId _) `hasPermissionTo` (EditJournal journal) = do
+  journal <- select $ from $ \j -> do
+    where_ (j ^. JournalOwner ==. val userId &&. j ^. JournalId ==. val journal)
+    return j
+  case journal of
+       [] -> return $ Unauthorized "You have no permission to edit this journal"
+       _ -> return Authorized
 
 isAuthorizedTo :: Maybe (Entity User) -> [Permission] -> YesodDB sub App AuthResult
 _ `isAuthorizedTo` [] = return Authorized
