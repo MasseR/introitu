@@ -39,6 +39,6 @@ postNewLinkR = do
               Just url' -> do
                 linkId <- runDB $ insert (Link url' user title summary now)
                 runDB $ mapM_ (insert . LinkTags linkId) tags
-                redirect $ ViewLinkR linkId
+                redirect $ NewLinkR
               _ -> setMessage "Invalid url" >> redirect NewLinkR
        _ -> redirect NewLinkR
