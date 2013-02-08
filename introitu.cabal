@@ -45,6 +45,7 @@ library
                      Handler.AddJournalItem
                      Handler.JournalEdit
                      Handler.ListJournals
+                     Handler.WriteJournal
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT

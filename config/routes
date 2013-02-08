@@ -20,3 +20,4 @@
 /journal/insert/#JournalId AddJournalItemR GET POST
 /journal/edit/#JournalId JournalEditR GET
 /journal/list ListJournalsR GET
+/journal/write/#JournalId WriteJournalR GET
