@@ -17,6 +17,9 @@
                     <a href=@{NewLinkR}>
                         Bookmark links
                 <li>
+                    <a href=@{ListJournalsR}>
+                        Your journals
+                <li>
                     <a href=@{AuthR LogoutR}>
                         Logout
             $nothing
