@@ -5,6 +5,7 @@ import Handler.Markdown (renderMarkdown)
 import qualified Text.Blaze.Html5 as H
 import System.Locale (defaultTimeLocale)
 import Data.Time.Format (formatTime)
+import qualified Data.Text as T (concat)
 
 data JournalItemForm = JournalItemForm Textarea
 
@@ -24,5 +25,6 @@ getWriteJournalR journalId = do
   items <- map (renderItem . entityVal) <$> (runDB $ selectList [JournalItemJournal ==. journalId] [Desc JournalItemCreated])
   ((_, formWidget), enctype) <- runFormPost $ renderDivs journalItemForm
   defaultLayout $ do
+    setTitle $ toHtml $ T.concat ["Journal - ", journalName journal]
     addScriptRemote "//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.2/jquery.min.js"
     $(widgetFile "journal")
